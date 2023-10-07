@@ -1,0 +1,23 @@
+.section-3{
+  display: flex ;
+  align-items: center;
+  box-sizing: border-box ;
+  justify-content: center;
+  gap: 20px;
+  padding: 40px;
+  background-size: cover;
+  .wrapper{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    img{
+      border-radius: 20px;
+      z-index: 15;
+    }
+    span{
+      z-index: 15;
+    }
+  }
+}
