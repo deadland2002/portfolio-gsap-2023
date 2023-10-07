@@ -1,23 +1,80 @@
-.section-3{
-  display: flex ;
+.section-3 {
+  display: flex;
   align-items: center;
-  box-sizing: border-box ;
+  box-sizing: border-box;
   justify-content: center;
   gap: 20px;
   padding: 40px;
   background-size: cover;
-  .wrapper{
+
+  .wrapper {
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 90%;
-    img{
+
+    img {
       border-radius: 20px;
       z-index: 15;
     }
-    span{
+
+    span {
       z-index: 15;
+    }
+  }
+}
+
+.section-4 {
+  .cardwrapper {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 40px;
+
+    .card {
+      position: relative;
+      display: flex;
+      flex: 1 0 max(45%, 300px);
+      overflow: hidden;
+      backdrop-filter: blur(3px);
+      border: 2px dashed gray;
+      border-radius: 20px;
+    }
+
+    .cardInner {
+      display: flex;
+      z-index: 20;
+      flex-direction: column;
+      padding: 20px;
+      box-sizing: border-box;
+      cursor: pointer;
+      gap: 10px;
+    }
+
+    .cardReveal {
+      position: absolute;
+      display: flex;
+      z-index: 20;
+      flex-direction: column;
+      padding: 20px;
+      box-sizing: border-box;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity .5s;
+      gap: 10px;
+    }
+
+    .expand {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      aspect-ratio: 1;
+      width: 0px;
+      background-color: black;
+      transition: width .5s;
+      border-radius: 50%;
     }
   }
 }
