@@ -223,7 +223,7 @@
       top: 50%;
       transform: translate(-50%, -50%);
       aspect-ratio: 1;
-      width: 0px;
+      width: 0;
       background-color: black;
       transition: width .5s;
       border-radius: 50%;
@@ -369,7 +369,7 @@
           button {
             font-size: 20px;
             border-radius: 20px;
-            padding: 0px 20px;
+            padding: 0 20px;
             background-color: #181818;
             border: 2px solid rgb(59, 130, 246);
             color: rgb(59, 130, 246);
@@ -422,7 +422,7 @@
       display: flex;
       flex-direction: column;
       margin: 0;
-      padding: 100px 0px;
+      padding: 100px 0;
 
       .spanTop, .spanBottom, .spanLeft, .spanRight {
         position: relative !important;

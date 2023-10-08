@@ -3,27 +3,35 @@ import React, {useEffect, useState} from 'react';
 function LightGrid({ IDElement }: { IDElement:string }) {
     const [rows, setRows] = useState<number>(0);
     const [cols, setCols] = useState<number>(0);
-    const [sizeOfDot, setSizeOfDot] = useState<number>(50);
+    const [sizeOfDot] = useState<number>(50);
     const [mousePositions, setMousePositions] = useState<{ [key: string]: { x: number; y: number } }>({});
 
-    useEffect(() => {
-        function resize(window: Window) {
-            const {innerWidth} = window;
-            const innerHeight = document.getElementById(IDElement).clientHeight
-            setCols(Math.floor(innerWidth / sizeOfDot));
-            setRows(Math.floor(innerHeight / sizeOfDot));
-        }
 
+    const resizeFunction = (window: Window)=>{
+        if(IDElement){
+            const {innerWidth} = window;
+            const innerHeight = document.getElementById(IDElement)?.clientHeight
+            if(innerHeight){
+                setCols(Math.floor(innerWidth / sizeOfDot));
+                setRows(Math.floor(innerHeight / sizeOfDot));
+            }
+        }
+    }
+
+
+    useEffect(() => {
         window.addEventListener('resize', (e) => {
-            resize(e.target as Window);
+            resizeFunction(e.target as Window);
         });
 
-        resize(window);
+        resizeFunction(window);
 
         return () => {
-            window.removeEventListener('resize', resize);
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            window.removeEventListener('resize', resizeFunction);
         };
-    }, [sizeOfDot]);
+    }, []);
 
     const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>, index: string , RowIndex:number,ColIndex:number) => {
         const {clientX, clientY} = event;
@@ -162,10 +170,10 @@ function LightGrid({ IDElement }: { IDElement:string }) {
 
     return (
         <div className={'flex flex-col absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'}>
-            {Array.from({length: rows}).map((row, rowIndex) => {
+            {Array.from({length: rows}).map((_, rowIndex) => {
                 return (
                     <div key={rowIndex} className={'flex'}>
-                        {Array.from({length: cols}).map((col, colIndex) => {
+                        {Array.from({length: cols}).map((_, colIndex) => {
                             const index = `${rowIndex}-${colIndex}`;
                             return (
                                 <div

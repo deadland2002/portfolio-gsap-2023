@@ -1,13 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import "../styles/Home.scss"
 import LightGrid from "../../Components/LightGrid.tsx";
 import ProjectsData from "../../Data/Projects.json"
 
-function Home(props) {
+function Home() {
     gsap.registerPlugin(ScrollTrigger);
-    const [imageUrl, setImageUrl] = useState<string>(undefined);
 
 
 
@@ -16,7 +15,7 @@ function Home(props) {
         // ScrollTrigger.normalizeScroll(true);
 
 
-        const setupSectionTimeline = (target, options) => {
+        const setupSectionTimeline = (target:string, options:{repeat?:number,repeatDelay?:number,start?:string,end?:string,scrub?:boolean,markers?:boolean}) => {
             return gsap.timeline({
                 repeat: options.repeat ?? 0,
                 repeatDelay: options.repeatDelay ?? 0,
@@ -140,9 +139,12 @@ function Home(props) {
 
         // Cleanup function
         return () => {
-            section1Timeline.scrollTrigger.kill();
-            section2Timeline.scrollTrigger.kill();
-            section2TimelineFade.scrollTrigger.kill();
+            section1Timeline?.scrollTrigger?.kill()
+            section2Timeline?.scrollTrigger?.kill()
+            section2TimelineFade?.scrollTrigger?.kill()
+            section3Timeline?.scrollTrigger?.kill()
+            section3Timeline2?.scrollTrigger?.kill()
+            section4Timeline?.scrollTrigger?.kill()
             // Add cleanup for other sections if needed
         };
     }, []);
@@ -244,8 +246,7 @@ function Home(props) {
                         </section>
 
 
-                        <section className={"section-3 p-10"} id={"SkillSec"}
-                                 style={{backgroundImage: `url('${imageUrl}')`}}>
+                        <section className={"section-3 p-10"} id={"SkillSec"}>
 
 
                             <div className={'wrapper'} id={"SkillSec_square"}>
