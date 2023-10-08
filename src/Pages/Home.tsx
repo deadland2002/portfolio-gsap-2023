@@ -1,13 +1,24 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
+import ScrollToPlugin from "gsap/ScrollToPlugin";
 import "../styles/Home.scss"
 import LightGrid from "../../Components/LightGrid.tsx";
 import ProjectsData from "../../Data/Projects.json"
 
-function Home() {
-    gsap.registerPlugin(ScrollTrigger);
 
+
+const indexID = {
+    1:"#heroMain",
+    2:"#AboutSec",
+    3:"#SkillSec",
+    4:"#Projects",
+    5:"#contact"
+}
+
+function Home() {
+    gsap.registerPlugin(ScrollTrigger,ScrollToPlugin);
+    const [pageIndex,setPageIndex] = useState<number>(1)
 
 
     useEffect(() => {
@@ -48,20 +59,85 @@ function Home() {
 
         section_id++;
 
-        const section2Timeline = setupSectionTimeline(`.section-${section_id}`, {
-            end: "+=200",
-            markers: false,
-            start: "top 50%"
-        });
-        section2Timeline.fromTo("#Sec_About_Heading", {
-            opacity: 0,
-            x: -20,
-        }, {
-            opacity: 1,
-            ease: "linear",
-            x: 0,
-            duration: 0.5
-        });
+        // const section2Timeline = setupSectionTimeline(`#Sec_About_Heading`, {
+        //     end: "+=200",
+        //     markers: false,
+        //     start: "top 50%"
+        // });
+        // section2Timeline.fromTo("#Sec_About_Heading", {
+        //     opacity: 0,
+        //     x: -20,
+        // }, {
+        //     opacity: 1,
+        //     ease: "linear",
+        //     x: 0,
+        //     duration: 0.5
+        // });
+
+        const spansAbout = document.querySelectorAll('#Sec_About_Heading span');
+        if(spansAbout){
+            spansAbout.forEach((span) => {
+                const spanTimeline = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: span,
+                        start: "top 90%",
+                        end: "+=100",
+                        markers: false,
+                    },
+                });
+
+                spanTimeline.fromTo(
+                    span,
+                    {
+                        opacity: 0,
+                        x: -20,
+                    },
+                    {
+                        opacity: 1,
+                        ease: 'linear',
+                        x: 0,
+                        duration: 0.5,
+                    }
+                );
+            });
+        }
+
+
+
+
+
+
+
+
+        const cardProjects = document.querySelectorAll('#Projects .card');
+        if(cardProjects){
+            cardProjects.forEach((span) => {
+                const spanTimeline = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: span,
+                        start: "top 80%",
+                        end: "+=200",
+                        markers: false,
+                    },
+                });
+
+                spanTimeline.fromTo(
+                    span,
+                    {
+                        opacity: 0,
+                        x: -20,
+                    },
+                    {
+                        opacity: 1,
+                        ease: 'linear',
+                        x: 0,
+                        duration: 0.5,
+                    }
+                );
+            });
+        }
+
+
 
 
         const section2TimelineFade = setupSectionTimeline(`.section-${section_id}`, {
@@ -140,7 +216,7 @@ function Home() {
         // Cleanup function
         return () => {
             section1Timeline?.scrollTrigger?.kill()
-            section2Timeline?.scrollTrigger?.kill()
+            // section2Timeline?.scrollTrigger?.kill()
             section2TimelineFade?.scrollTrigger?.kill()
             section3Timeline?.scrollTrigger?.kill()
             section3Timeline2?.scrollTrigger?.kill()
@@ -194,6 +270,13 @@ function Home() {
         span.style.width = "0"
     }
 
+
+    const HandleScrollPage = (index: number) => {
+        console.log(index,indexID[index])
+        gsap.to(window, { duration: 1, scrollTo: indexID[index], ease: "power2.inOut" });
+    }
+
+
     return (
         <>
             <div id={'main_div'}>
@@ -203,14 +286,14 @@ function Home() {
                 {/*    <div id="smooth-content">*/}
 
 
-                        <section className="section-1">
+                        <section className="section-1" id={'heroMain'}>
                             <span id="introSpan"
                                   className="fadeOut">
                                 Hello World
                             </span>
 
                             <span
-                                className={'btnWhite fadeOut'}>
+                                className={'btnWhite fadeOut'} onClick={()=>{HandleScrollPage(2)}}>
                                 scroll down
                                 <img className={'aspect-square w-6'} src={'/gif/arrrow_down.gif'}/>
                             </span>
