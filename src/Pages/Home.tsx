@@ -1,21 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
-import {ScrollSmoother} from "gsap-trial/ScrollSmoother";
-import anime from 'animejs/lib/anime.es.js';
 import "../styles/Home.scss"
 import LightGrid from "../../Components/LightGrid.tsx";
+import ProjectsData from "../../Data/Projects.json"
 
 function Home(props) {
-    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
-    const animationRef = React.useRef(null);
-    const [imageUrl,setImageUrl] = useState<string>(undefined);
+    gsap.registerPlugin(ScrollTrigger);
+    const [imageUrl, setImageUrl] = useState<string>(undefined);
 
-    const HandleFocusImage = (ID) =>{
-        if(ID==1){
-            setImageUrl("/jpg/next_bg.jpg")
-        }
-    }
 
 
     useEffect(() => {
@@ -23,17 +16,10 @@ function Home(props) {
         // ScrollTrigger.normalizeScroll(true);
 
 
-        ScrollSmoother.create({
-            smooth: 1,
-            effects: true,
-            smoothTouch: 0.1,
-        });
-
-
         const setupSectionTimeline = (target, options) => {
             return gsap.timeline({
-                repeat : options.repeat ?? 0,
-                repeatDelay : options.repeatDelay?? 0,
+                repeat: options.repeat ?? 0,
+                repeatDelay: options.repeatDelay ?? 0,
                 scrollTrigger: {
                     trigger: target,
                     start: options.start || "top top",
@@ -74,50 +60,44 @@ function Home(props) {
         }, {
             opacity: 1,
             ease: "linear",
-            x:0,
-            duration:0.5
+            x: 0,
+            duration: 0.5
         });
 
 
-
         const section2TimelineFade = setupSectionTimeline(`.section-${section_id}`, {
-            end: "+=50%",
+            end: "+=300px",
             markers: false,
             scrub: true,
-            start :"80% 50%"
+            start: "bottom 50%"
         });
         section2TimelineFade.fromTo("#AboutSec", {
             opacity: 1,
             zIndex: 20,
-            y:"0%"
+            y: "0%"
         }, {
             opacity: 0,
             zIndex: -1,
-            y:"10%",
+            y: "10%",
             ease: "linear",
         });
 
 
-
-
         section_id++;
-
-
-
 
 
         const section3Timeline = setupSectionTimeline(`.section-${section_id}`, {
             end: "+=30%",
             markers: false,
             start: "top 80%",
-            scrub:true,
+            scrub: true,
         });
         section3Timeline.fromTo("#SkillSec", {
-            opacity:0,
-            zIndex:0,
-        },{
-            opacity:1,
-            zIndex:20,
+            opacity: 0,
+            zIndex: 0,
+        }, {
+            opacity: 1,
+            zIndex: 20,
             ease: "linear",
         })
 
@@ -126,20 +106,36 @@ function Home(props) {
             end: "+=100%",
             markers: false,
             start: "50% 50%",
-            scrub:true,
+            scrub: true,
         });
         section3Timeline2.fromTo("#SkillSec_square", {
             zIndex: 20,
-            position: "fixed", // Set the position to fixed
-            top: "100px", // Set the initial top position
             opacity: 1,
         }, {
             zIndex: 10,
             ease: "power1.inOut",
-            top: "50%", // Adjust as needed
             opacity: 0,
-            duration: 2,
+            duration: 1,
         });
+
+
+        section_id++;
+
+
+        const section4Timeline = setupSectionTimeline(`.section-${4}`, {
+            end: "+=300px",
+            markers: false,
+            start: "bottom 50%",
+            scrub: true,
+        });
+        section4Timeline.fromTo("#Projects", {
+            opacity: 1,
+            zIndex: 20,
+        }, {
+            opacity: 0,
+            zIndex: 10,
+            ease: "linear",
+        })
 
 
         // Cleanup function
@@ -152,13 +148,13 @@ function Home(props) {
     }, []);
 
 
-
-
-    const HandleMouseMoveProjects = (event: React.MouseEvent<HTMLDivElement>) =>{
+    const HandleMouseMoveProjects = (event: React.MouseEvent<HTMLDivElement>) => {
         const div = event.currentTarget as HTMLDivElement;
 
         const span = div.getElementsByClassName("expand")[0] as HTMLSpanElement;
         const reveal = div.getElementsByClassName("cardReveal")[0] as HTMLDivElement;
+        const cardInner = div.getElementsByClassName("cardInner")[0] as HTMLDivElement;
+        cardInner.style.opacity = "0";
 
         reveal.style.opacity = "1";
 
@@ -170,7 +166,7 @@ function Home(props) {
 
         const posX = Math.min(deltaX, divRect.width);
         const posY = Math.min(deltaY, divRect.height);
-        const normalizedDeltaX =  posX >= 0 ? posX : 0 ;
+        const normalizedDeltaX = posX >= 0 ? posX : 0;
         const normalizedDeltaY = posY >= 0 ? posY : 0;
 
 
@@ -178,19 +174,20 @@ function Home(props) {
         span.style.top = `${normalizedDeltaY}px`
         span.style.width = "200%"
 
-        console.log(clientY,clientX)
-        console.log(deltaY,deltaX)
-        console.log(divRect.top,divRect.left)
+        console.log(clientY, clientX)
+        console.log(deltaY, deltaX)
+        console.log(divRect.top, divRect.left)
         // console.log(normalizedDeltaY,normalizedDeltaX)
         console.log("......")
     }
 
 
-
-    const HandleMouseOutProjects = (event: React.MouseEvent<HTMLDivElement>) =>{
+    const HandleMouseOutProjects = (event: React.MouseEvent<HTMLDivElement>) => {
         const div = event.currentTarget as HTMLDivElement;
         const span = div.getElementsByClassName("expand")[0] as HTMLSpanElement;
         const reveal = div.getElementsByClassName("cardReveal")[0] as HTMLDivElement;
+        const cardInner = div.getElementsByClassName("cardInner")[0] as HTMLDivElement;
+        cardInner.style.opacity = "1";
         reveal.style.opacity = "0";
         span.style.width = "0"
     }
@@ -200,100 +197,80 @@ function Home(props) {
             <div id={'main_div'}>
 
 
-                <div id="smooth-wrapper">
-                    <div id="smooth-content">
+                {/*<div id="smooth-wrapper">*/}
+                {/*    <div id="smooth-content">*/}
 
 
+                        <section className="section-1">
+                            <span id="introSpan"
+                                  className="fadeOut">
+                                Hello World
+                            </span>
 
-
-
-
-
-
-                        <section className="relative section-1 z-10 flex justify-center items-center">
-                        <span id="introSpan" data-speed={"0.5"}
-                              className="text-[8vw] fadeOut">
-                            Hello World
-                        </span>
-
-                            <span className={'flex gap-2 absolute bottom-10 left-1/2 -translate-x-1/2 bg-white text-black rounded-3xl px-5 py-1 fadeOut'}>
+                            <span
+                                className={'btnWhite fadeOut'}>
                                 scroll down
-                                <img className={'aspect-square w-6'} src={'/gif/arrrow_down.gif'} />
+                                <img className={'aspect-square w-6'} src={'/gif/arrrow_down.gif'}/>
                             </span>
                         </section>
 
 
-
-
-
-
-
-
-
-
-
-                        <section className={"section-2 relative"} id={"AboutSec"}>
-                            <div className={'bg-white flex items-center box-border justify-between p-6 gap-4 z-20 min-h-[100vh]'} id={"AboutSec_Div"}>
-                                <div className={'w-[40%] flex justify-center'} data-speed={'0.9'}>
+                        <section className={"section-2"} id={"AboutSec"}>
+                            <div className={'wrapper'} id={"AboutSec_Div"}>
+                                <div className={'imgWrapper'}>
                                     <img src={'/png/29784.png'} className={'rounded-xl shadow-2xl'}/>
                                 </div>
-                                <div className={'min-h-[300px] flex w-[60%] flex-col gap-4 box-border p-6'} id={'Sec_About_Heading'} data-speed={'0.9'}>
+                                <div className={'dataWrapper'} id={'Sec_About_Heading'} >
                                     <div className={'flex gap-2'}>
                                         <span className={'text-black text-5xl'}>About</span>
                                         <span className={'text-blue-500 text-5xl'}>Me</span>
                                     </div>
                                     <span className={'text-black'}>
-                                    Greetings! I'm Satvik Shukla, a passionate full-stack developer based in the vibrant tech landscape of India. With over three years of hands-on experience, my journey has been a thrilling exploration of the digital realm, fueled by a love for creating seamless and innovative solutions.
-                                </span>
+                                        Greetings! I'm Satvik Shukla, a passionate full-stack developer based in the vibrant tech landscape of India. With over three years of hands-on experience, my journey has been a thrilling exploration of the digital realm, fueled by a love for creating seamless and innovative solutions.
+                                    </span>
                                     <span className={'text-black'}>
-                                    On the frontend, I specialize in crafting captivating user experiences using technologies like React, Next.js, and React Native. From responsive web applications to cross-platform mobile solutions, I thrive on turning ideas into interactive and visually stunning realities.
-                                </span>
+                                        On the frontend, I specialize in crafting captivating user experiences using technologies like React, Next.js, and React Native. From responsive web applications to cross-platform mobile solutions, I thrive on turning ideas into interactive and visually stunning realities.
+                                    </span>
 
                                     <span className={'text-black'}>
-                                    The backend is my playground, where I wield the power of Node.js to build robust and scalable server-side applications. I'm well-versed in connecting the dots and ensuring a smooth flow of data, whether it's in the form of APIs or real-time communication.
-                                </span>
+                                        The backend is my playground, where I wield the power of Node.js to build robust and scalable server-side applications. I'm well-versed in connecting the dots and ensuring a smooth flow of data, whether it's in the form of APIs or real-time communication.
+                                    </span>
 
                                     <span className={'text-black'}>
-                                    In the database realm, I navigate through PostgreSQL, MongoDB, and SQL, orchestrating the perfect symphony of structured and unstructured data. My proficiency extends to cloud environments, with AWS and Cloudflare being integral parts of my toolkit.
-                                </span>
+                                        In the database realm, I navigate through PostgreSQL, MongoDB, and SQL, orchestrating the perfect symphony of structured and unstructured data. My proficiency extends to cloud environments, with AWS and Cloudflare being integral parts of my toolkit.
+                                    </span>
                                 </div>
                             </div>
                         </section>
 
 
+                        <section className={"section-3 p-10"} id={"SkillSec"}
+                                 style={{backgroundImage: `url('${imageUrl}')`}}>
 
 
+                            <div className={'wrapper'} id={"SkillSec_square"}>
 
 
+                                <img src={'/gif/dot_sphere.gif'}/>
 
 
-
-
-
-
-                        <section className={"section-3 p-10"} id={"SkillSec"} style={{backgroundImage:`url('${imageUrl}')`}} data-speed={'1.1'}>
-
-
-                            <div className={'wrapper'} data-speed={'1'} id={"SkillSec_square"}>
-
-
-                                <img src={'/gif/dot_sphere.gif'} />
-
-
-
-                                <span className={'absolute top-0 text-3xl hover:bg-gray-800 w-fit px-4 py-2 rounded transition-all duration-300 cursor-pointer'} >
-                                    Frontend Development:
+                                <span
+                                    className={'spanTop'}>
+                                    Frontend Development
                                 </span>
 
-                                <span className={'absolute left-0 text-3xl hover:bg-gray-800 w-fit px-4 py-2 rounded transition-all duration-300 cursor-pointer'}>
-                                    Backend Development:
+                                <span
+                                    className={'spanBottom'}>
+                                    Backend Development
                                 </span>
 
-                                <span className={'absolute right-0 text-3xl hover:bg-gray-800 w-fit px-4 py-2 rounded transition-all duration-300 cursor-pointer'}>
-                                    Cloud Services:
+                                <span
+                                    className={'spanRight'}>
+                                    Deployment
                                 </span>
 
-                                <span className={'absolute bottom-0 text-3xl hover:bg-gray-800 w-fit px-4 py-2 rounded transition-all duration-300 cursor-pointer'}>
+                                <span
+                                    className={'spanLeft'}>
                                     Android
                                 </span>
 
@@ -305,37 +282,42 @@ function Home(props) {
                             {/*</div>*/}
 
 
-
                         </section>
 
 
+                        <section className={"section-4 p-10 bg-white project"} id={"Projects"} >
 
+                            <LightGrid IDElement={"Projects"}/>
 
+                            <div className={'hint'}>
+                                <span>hover to reveal</span>
+                            </div>
 
-
-
-
-                        <section className={"section-4 p-10 bg-white project"} id={"Projects"} data-speed={'1.1'}>
-
-                            <LightGrid />
-
-                            <div className={'flex flex-col w-full h-full gap-20'}>
-                                <div className={'flex'}>
-                                    <h2 className={'text-black text-6xl z-20'}>Projects :</h2>
+                            <div className={'dataWrapper'}>
+                                <div className={'headerWrapper'}>
+                                    <h2 className={'text-black z-20'}>Project<span
+                                        className={'text-blue-500'}>s</span> :</h2>
                                 </div>
 
                                 <div className={'cardwrapper'}>
 
                                     {
-                                        Array.from({length: 6}).map((single)=>(
-                                            <div className={'card'} onMouseMove={HandleMouseMoveProjects} onMouseOut={HandleMouseOutProjects} datatype={"parent"}>
+                                        ProjectsData.map((single) => (
+                                            <div className={'card'} onMouseMove={HandleMouseMoveProjects}
+                                                 onMouseOut={HandleMouseOutProjects} datatype={"parent"}>
                                                 <div className={'cardInner'}>
-                                                    <span className={'text-black text-3xl'}>Ignitia</span>
-                                                    <span className={'text-black'}> served as a frontend developer at SenseOriginal, a startup specializing in NFC-based applications against counterfeits</span>
+                                                    <span className={'text-black heading'}>{single.Title}</span>
+                                                    <div className={'flex flex-col gap-2 justify-between'}>
+                                                        <span className={'text-black'}>{single.Desc}</span>
+                                                        <span className={'text-black blue'}>{single.year}</span>
+                                                    </div>
                                                 </div>
                                                 <div className={'cardReveal'}>
-                                                    <span className={'text-3xl'}>Stack Used : </span>
-                                                    <span className={''}>Used NextJs as the SSG for the website along with Postman for API management and Cloudinary for Image management</span>
+                                                    <span className={"heading"}>{single.Title}</span>
+                                                    <div className={'flex flex-col gap-2 justify-between  flex-1'}>
+                                                        <span>{single.TagLine}</span>
+                                                        <span className={'blue'}>{single.stack}</span>
+                                                    </div>
                                                 </div>
                                                 <span className={'expand'}></span>
                                             </div>
@@ -346,10 +328,96 @@ function Home(props) {
                             </div>
 
                         </section>
-                    </div>
-                </div>
 
-            </div>
+
+                        <section className={"section-5 relative"} id={"contact"} >
+                            <LightGrid IDElement={"contact"}/>
+
+
+                            <div className={'hint'}>
+                                <span>icon contain link</span>
+                            </div>
+
+
+
+                            <div className={'wrapper'}>
+                                <div className={'headingWrapper'}>
+                                    <span>Contact<span className={'text-blue-500'}>s</span></span>
+                                </div>
+                                <div className={'detailsWrapper'}>
+                                    <div className={'left'}>
+                                        <div className={'fields'}>
+                                            <a href={"mailto:satvikshukla453@gmail.com"}>
+                                                <i className="fi fi-rr-envelope"></i>
+                                            </a>
+                                            <span className={'blue'}>satvikshukla453@gmail.com</span>
+                                        </div>
+
+                                        <div className={'fields'}>
+                                            <a href={"https://github.com/deadland2002"} target={"_blank"}>
+                                                <i className="fi fi-brands-github"></i>
+                                            </a>
+                                            <span className={'blue'}>deadland2002</span>
+                                        </div>
+
+                                        <div className={'fields'}>
+                                            <a href={"https://www.linkedin.com/in/satvik-shukla-a758791b1/"} target={"_blank"}>
+                                                <i className="fi fi-brands-linkedin"></i>
+                                            </a>
+                                            <span className={'blue'}>satvik-shukla-a758791b1</span>
+                                        </div>
+
+                                        <div className={'fields'}>
+                                            <a href={"https://twitter.com/satvikshukla453"} target={"_blank"}>
+                                                <i className="fi fi-brands-twitter"></i>
+                                            </a>
+                                            <span className={'blue'}>@satvikshukla453</span>
+                                        </div>
+
+                                        <div className={'fields'}>
+                                            <a className={'flex gap-[20px] items-center'} href={"/pdf/resume.pdf"} download={true}>
+                                                <i className="fi fi-brands-twitter"></i>
+                                                <span className={'blue'}>Résumé</span>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div className={'right'}>
+                                        <div className={'rightHeadingWrapper'}>
+                                            <span>Get In Touch</span>
+                                        </div>
+
+                                        <div className={'row'}>
+                                                <div className={'field'}>
+                                                    {/*<span>Name : </span>*/}
+                                                    <input type={'text'} placeholder={'Name'}/>
+                                                </div>
+
+                                                <div className={'field'}>
+                                                    {/*<span>Subject : </span>*/}
+                                                    <input type={'text'} placeholder={'Subject'}/>
+                                                </div>
+                                        </div>
+
+
+                                        <div className={'row flex-1'}>
+                                            <div className={'field flex-1'}>
+                                                {/*<span>Name : </span>*/}
+                                                <textarea placeholder={'Message'}/>
+                                            </div>
+                                        </div>
+
+                                        <div className={'row justify-center'}>
+                                            <button>Send</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+            {/*    </div>*/}
+
+            {/*</div>*/}
         </>
     );
 }

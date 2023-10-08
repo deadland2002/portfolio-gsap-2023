@@ -1,0 +1,44 @@
+[
+  {
+    "Title": "LogAnalyser",
+    "Desc": "A robust web application leveraging the ELK stack to monitor and alert users about server logs, ensuring proactive management and issue resolution.",
+    "TagLine": "LogAnalyser: Decoding the Language of Servers for Smarter Operations.",
+    "year": "2023",
+    "stack": "NextJs , Postman , Python , AWS , SQL , gRPC , Socket"
+  },
+  {
+    "Title": "MedXRIH",
+    "Desc": "An integrated web and android platform connecting doctors, patients, and pharmacies, streamlining healthcare communication and services.",
+    "TagLine": "MedXRIH: Nurturing Health through Digital Harmony.",
+    "year": "2023",
+    "stack": "React , React Native , MongoDb , NodeJs , Postman"
+  },
+  {
+    "Title": "Ignitia",
+    "Desc": "A dynamic website designed for a college cultural fest, providing information, updates, and an interactive platform for participants.",
+    "TagLine": "Ignite the Cultural Spark: Ignitia Unleashed!",
+    "year": "2023",
+    "stack": "NextJs , Postman , MongoDb , Postman"
+  },
+  {
+    "Title": "WebRTC",
+    "Desc": "A cutting-edge web application enabling real-time communication among users, fostering seamless interactions over the internet.",
+    "TagLine": "WebRTC: Bridging the Digital Divide, One Conversation at a Time.",
+    "year": "2022",
+    "stack": "React , Sockets , MongoDb"
+  },
+  {
+    "Title": "ChatX",
+    "Desc": "A feature-rich web application facilitating real-time communication and chat storage, reminiscent of popular messaging apps like WhatsApp.",
+    "TagLine": "ChatX: Where Conversations Echo Through Time.",
+    "year": "2022",
+    "stack": "React , Sockets , SQL"
+  },
+  {
+    "Title": "SpaceXClone",
+    "Desc": "A meticulous recreation of the SpaceX website, offering users an immersive experience akin to the original.",
+    "TagLine": "Embark on a Virtual Space Odyssey with SpaceXClone!",
+    "year": "2022",
+    "stack": "HTML , CSS"
+  }
+]

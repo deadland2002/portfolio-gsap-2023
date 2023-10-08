@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-function LightGrid(props) {
+function LightGrid({ IDElement }: { IDElement:string }) {
     const [rows, setRows] = useState<number>(0);
     const [cols, setCols] = useState<number>(0);
     const [sizeOfDot, setSizeOfDot] = useState<number>(50);
@@ -9,7 +9,7 @@ function LightGrid(props) {
     useEffect(() => {
         function resize(window: Window) {
             const {innerWidth} = window;
-            const innerHeight = document.getElementById("Projects").clientHeight
+            const innerHeight = document.getElementById(IDElement).clientHeight
             setCols(Math.floor(innerWidth / sizeOfDot));
             setRows(Math.floor(innerHeight / sizeOfDot));
         }
@@ -176,10 +176,11 @@ function LightGrid(props) {
                                     onMouseLeave={() => handleMouseLeave(index,rowIndex,colIndex)}
                                 >
                                   <span
-                                      className={'block w-2 aspect-square bg-gray-300 rounded-full'}
+                                      className={'block w-2 aspect-square rounded-full bgInteractiveDots'}
                                       style={{
                                           transform: `translate(${mousePositions[index]?.x}px, ${mousePositions[index]?.y}px)`,
-                                          transition: "all .3s"
+                                          transition: "all .3s",
+                                          backgroundColor : "#D1D5DB"
                                       }}
                                   ></span>
                                 </div>

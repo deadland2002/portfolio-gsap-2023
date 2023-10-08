@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@flaticon/flaticon-uicons": "^2.4.0",
     "animejs": "^3.2.1",
     "gsap": "^3.12.2",
     "gsap-trial": "^3.12.2",
