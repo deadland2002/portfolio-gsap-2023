@@ -250,7 +250,7 @@ function Home() {
 
         span.style.left = `${normalizedDeltaX}px`
         span.style.top = `${normalizedDeltaY}px`
-        span.style.width = "200%"
+        span.style.width = "300%"
 
         console.log(clientY, clientX)
         console.log(deltaY, deltaX)
