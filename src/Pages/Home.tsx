@@ -466,7 +466,7 @@ function Home() {
                                         </div>
                                     </div>
 
-                                    <div className={'right'}>
+                                    <form className={'right'} action="https://formspree.io/f/xjvqpqeb" method="POST">
                                         <div className={'rightHeadingWrapper'}>
                                             <span>Get In Touch</span>
                                         </div>
@@ -474,12 +474,12 @@ function Home() {
                                         <div className={'row'}>
                                                 <div className={'field'}>
                                                     {/*<span>Name : </span>*/}
-                                                    <input type={'text'} placeholder={'Name'}/>
+                                                    <input type={'text'} name={'Name'} placeholder={'Name'} required={true}/>
                                                 </div>
 
                                                 <div className={'field'}>
                                                     {/*<span>Subject : </span>*/}
-                                                    <input type={'text'} placeholder={'Subject'}/>
+                                                    <input type={'text'} name={'Subject'} placeholder={'Subject'} required={true}/>
                                                 </div>
                                         </div>
 
@@ -487,14 +487,14 @@ function Home() {
                                         <div className={'row flex-1'}>
                                             <div className={'field flex-1'}>
                                                 {/*<span>Name : </span>*/}
-                                                <textarea placeholder={'Message'}/>
+                                                <textarea name={'Message'} placeholder={'Message'} required={true}/>
                                             </div>
                                         </div>
 
                                         <div className={'row justify-center'}>
                                             <button>Send</button>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </section>
