@@ -459,7 +459,7 @@ function Home() {
 
                                         <div className={'fields'}>
                                             <a className={'flex gap-[20px] items-center'} href={"/pdf/resume.pdf"} download={true}>
-                                                <i className="fi fi-brands-twitter"></i>
+                                                <i className="fi fi-rr-document"></i>
                                                 <span className={'blue'}>Résumé</span>
                                             </a>
                                         </div>
