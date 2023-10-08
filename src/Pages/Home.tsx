@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import ScrollToPlugin from "gsap/ScrollToPlugin";
@@ -6,9 +6,11 @@ import "../styles/Home.scss"
 import LightGrid from "../../Components/LightGrid.tsx";
 import ProjectsData from "../../Data/Projects.json"
 
+interface indexIDProp{
+    [id:number]:string
+}
 
-
-const indexID = {
+const indexID:indexIDProp = {
     1:"#heroMain",
     2:"#AboutSec",
     3:"#SkillSec",
@@ -18,9 +20,6 @@ const indexID = {
 
 function Home() {
     gsap.registerPlugin(ScrollTrigger,ScrollToPlugin);
-    const [pageIndex,setPageIndex] = useState<number>(1)
-
-
     useEffect(() => {
 
         // ScrollTrigger.normalizeScroll(true);
